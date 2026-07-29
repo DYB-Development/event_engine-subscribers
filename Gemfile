@@ -10,7 +10,7 @@ event_engine_path = File.expand_path("../event_engine", __dir__)
 if File.directory?(event_engine_path)
   gem "event_engine", path: event_engine_path
 else
-  gem "event_engine", github: "tylercschneider/event_engine"
+  gem "event_engine", github: "DYB-Development/event_engine"
 end
 
 gem "the_local", github: "tylercschneider/the_local"
