@@ -1,7 +1,7 @@
 module EventEngine
   module Subscribers
     # Runs an event's subscribers in a background worker. Enqueued by
-    # {Handler} for +:background+ events, which dispatch their subscribers
+    # {Processor} for +:background+ events, which dispatch their subscribers
     # asynchronously without touching the outbox.
     class DispatchSubscribersJob < ApplicationJob
       queue_as :default

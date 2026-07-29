@@ -2,7 +2,7 @@ require "test_helper"
 
 module EventEngine
   module Subscribers
-    class HandlerTest < ActiveSupport::TestCase
+    class ProcessorTest < ActiveSupport::TestCase
       include ActiveJob::TestHelper
 
       teardown { Registry.clear! }
@@ -11,7 +11,7 @@ module EventEngine
         event = EventEngine::Event.new(event_name: :cow_fed, process_type: :background)
 
         assert_enqueued_with(job: DispatchSubscribersJob) do
-          Handler.new.call(event)
+          Processor.new.call(event)
         end
       end
 
@@ -21,27 +21,9 @@ module EventEngine
         Registry.register(:cow_fed, subscriber)
         event = EventEngine::Event.new(event_name: :cow_fed, process_type: :inline)
 
-        Handler.new.call(event)
+        Processor.new.call(event)
 
         assert_equal [ event ], handled
-      end
-
-      test "handles an :inline event" do
-        event = EventEngine::Event.new(process_type: :inline)
-
-        assert Handler.new.handles?(event)
-      end
-
-      test "handles a :background event" do
-        event = EventEngine::Event.new(process_type: :background)
-
-        assert Handler.new.handles?(event)
-      end
-
-      test "does not handle a :durable event" do
-        event = EventEngine::Event.new(process_type: :durable)
-
-        assert_not Handler.new.handles?(event)
       end
     end
   end

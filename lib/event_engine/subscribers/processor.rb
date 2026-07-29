@@ -1,6 +1,6 @@
 module EventEngine
   module Subscribers
-    class Handler
+    class Processor
       HANDLED_PROCESS_TYPES = [ :inline, :background ].freeze
 
       def call(event)
@@ -8,10 +8,6 @@ module EventEngine
         when :inline then dispatch_synchronously(event)
         when :background then dispatch_in_background(event)
         end
-      end
-
-      def handles?(event)
-        HANDLED_PROCESS_TYPES.include?(event.process_type&.to_sym)
       end
 
       private
