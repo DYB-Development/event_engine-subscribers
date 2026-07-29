@@ -5,9 +5,9 @@ Gem::Specification.new do |spec|
   spec.version     = EventEngine::Subscribers::VERSION
   spec.authors     = [ "tylercschneider" ]
   spec.email       = [ "tylercschneider@gmail.com" ]
-  spec.homepage    = "https://github.com/tylercschneider/event_engine-subscribers"
+  spec.homepage    = "https://github.com/DYB-Development/event_engine-subscribers"
   spec.summary     = "In-app subscriber execution for EventEngine"
-  spec.description = "The subscriber layer for EventEngine: runs in-app subscribers for events whose process_type is :inline or :background. Registers a handler with the core bus and self-selects those events. Depends on event_engine for event definitions and dispatch."
+  spec.description = "The subscriber layer for EventEngine: runs your in-app subscribers for events routed to it. Registers itself with the event_engine runtime as the :inline and :background processors, running subscribers synchronously or in a background job depending on which one an event's rule names."
   spec.license     = "MIT"
 
   spec.required_ruby_version = ">= 3.2.0"
@@ -26,5 +26,5 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "railties", ">= 7.1.6", "< 9"
   spec.add_dependency "activejob", ">= 7.1.6", "< 9"
-  spec.add_dependency "event_engine"
+  spec.add_dependency "event_engine", ">= 0.2.0"
 end
