@@ -6,7 +6,6 @@ check whether a local owns it and delegate — never work from memory on
 something a local covers:
 
 - Claude Code locals: gems register subagents, the_local builds committed .md and installs them into a host app → the_local-* agents
-- events — defining EventEngine events, emitting, and the schema workflow → event_engine-* agents
 
 See each agent's description for specifics.
 <!-- the_local:end -->
@@ -113,5 +112,9 @@ where touching more than the unit under test is expected and correct.
   tooling requires (e.g. `rubocop:disable`). Prefer refactoring over a "why" comment
   whenever you can.
 <!-- the_local:process:end -->
+
+
+
+
 
 
