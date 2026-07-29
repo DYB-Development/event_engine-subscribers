@@ -95,6 +95,12 @@ If subscribers do not run for an event that *is* routed here, check that the
 subscriber class has been loaded — `subscribes_to` registers at load time, so a class
 Rails has not autoloaded yet has not registered.
 
+## A working example app
+
+[**DYB-Development/event_engine_example**](https://github.com/DYB-Development/event_engine_example)
+is a minimal Rails app using this gem — two subscribers on one event to show fan-out,
+one routed `inline` and one `background`, with an integration test covering both.
+
 ## Development
 
 ```bash
