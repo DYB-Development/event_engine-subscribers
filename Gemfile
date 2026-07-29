@@ -15,6 +15,10 @@ end
 
 gem "the_local", github: "tylercschneider/the_local"
 
+# The dummy app under test/dummy boots a full Rails app. The gem itself needs
+# only railties + activejob — see the gemspec.
+gem "rails", ">= 7.1.6", "< 9"
+
 gem "puma"
 
 gem "sqlite3"

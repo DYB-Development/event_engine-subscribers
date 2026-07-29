@@ -24,6 +24,7 @@ Gem::Specification.new do |spec|
     Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
   end
 
-  spec.add_dependency "rails", ">= 7.1.6", "< 9"
+  spec.add_dependency "railties", ">= 7.1.6", "< 9"
+  spec.add_dependency "activejob", ">= 7.1.6", "< 9"
   spec.add_dependency "event_engine"
 end
