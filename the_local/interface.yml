@@ -1,0 +1,19 @@
+scope: in-app event subscribers for EventEngine — writing subscribers and running them inline or in the background
+
+install:
+  - gem "event_engine-subscribers"
+
+develop:
+  - EventEngine::Subscribers::Base
+  - subscribes_to
+  - "#handle"
+  - config/event_rules.yml
+  - EventEngine::Subscribers::Registry.clear!
+
+sources:
+  - lib/event_engine/subscribers.rb
+  - lib/event_engine/subscribers/engine.rb
+  - lib/event_engine/subscribers/base.rb
+  - lib/event_engine/subscribers/registry.rb
+  - lib/event_engine/subscribers/processor.rb
+  - app/jobs/event_engine/subscribers/dispatch_subscribers_job.rb
