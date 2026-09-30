@@ -13,6 +13,10 @@ module EventEngine
           end
         end
       end
+
+      initializer "event_engine.subscribers.forget_unloaded_subscribers" do |app|
+        app.reloader.before_class_unload { Registry.clear! }
+      end
     end
   end
 end
