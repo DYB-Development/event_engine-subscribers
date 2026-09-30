@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-09-30
+
+### Changed
+
+- The gem ships its Claude Code agents in `the_local/` for the current the_local, and
+  no longer ships the file that registered them through the removed `TheLocal.register`.
+
 ### Fixed
 
 - Every subscriber in `app/subscribers` is registered when the app starts, so an event
