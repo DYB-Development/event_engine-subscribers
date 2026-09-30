@@ -24,8 +24,9 @@ no wiring.**
 
 ### 1. Write a subscriber
 
-Subclass `Base`, declare the event, implement `#handle`. Declaring the subscription
-self-registers the class, so there is nothing else to wire.
+Subclass `Base` in `app/subscribers`, declare the event, implement `#handle`. Every
+class in `app/subscribers` is loaded and registered when the app starts and again
+after each code reload, so there is nothing else to wire.
 
 ```ruby
 class SendWelcomeEmail < EventEngine::Subscribers::Base
@@ -92,8 +93,8 @@ EventEngine::UnregisteredProcessorError: the rule for event :lead_created
 ```
 
 If subscribers do not run for an event that *is* routed here, check that the
-subscriber class has been loaded — `subscribes_to` registers at load time, so a class
-Rails has not autoloaded yet has not registered.
+subscriber class is in `app/subscribers`. A subscriber anywhere else registers only
+once Rails has loaded its class.
 
 ## A working example app
 

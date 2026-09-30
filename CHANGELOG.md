@@ -5,6 +5,15 @@ All notable changes to this gem are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- Every subscriber in `app/subscribers` is registered when the app starts, so an event
+  sent in development runs subscribers that nothing has mentioned yet.
+- A subscriber is registered once after a code reload, where it used to be registered
+  again beside its old class, so its `#handle` ran twice with the old code and the new.
+
 ## [0.1.0] - 2026-07-29
 
 First published release of `event_engine-subscribers`, the subscriber layer of the
