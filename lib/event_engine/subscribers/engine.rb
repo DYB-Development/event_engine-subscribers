@@ -17,6 +17,13 @@ module EventEngine
       initializer "event_engine.subscribers.forget_unloaded_subscribers" do |app|
         app.reloader.before_class_unload { Registry.clear! }
       end
+
+      initializer "event_engine.subscribers.load_subscribers" do |app|
+        config.to_prepare do
+          subscribers = app.root.join("app/subscribers")
+          Rails.autoloaders.main.eager_load_dir(subscribers) if subscribers.directory?
+        end
+      end
     end
   end
 end

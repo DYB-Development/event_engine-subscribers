@@ -13,6 +13,14 @@ class SubscribersAcrossReloadsTest < ActiveSupport::TestCase
     assert_equal "1", count
   end
 
+  test "a subscriber nothing has mentioned is registered when the app starts" do
+    count = in_development(<<~RUBY)
+      print EventEngine::Subscribers::Registry.subscribers_for(:cow_fed).size
+    RUBY
+
+    assert_equal "1", count
+  end
+
   private
 
   def in_development(script)
