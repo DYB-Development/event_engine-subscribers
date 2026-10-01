@@ -12,6 +12,14 @@ module EventEngine
     #
     # @param routes [Hash{Symbol=>Symbol}] each event name and the process type it is routed to
     # @return [true]
+    # Each event in event_engine's catalog and the process type its rule routes it to.
+    #
+    # @return [Hash{Symbol=>Symbol}]
+    def self.routes
+      schemas = EventEngine.schema_registry
+      schemas.events.to_h { |event_name| [ event_name, EventEngine.processing_rules.for(event_name: event_name, pack: schemas.latest_for(event_name).domain) ] }
+    end
+
     def self.check!(routes)
       unsubscribed = Registry.unsubscribed(routes)
       raise UnsubscribedEventsError, unsubscribed if unsubscribed.any?
