@@ -1,0 +1,20 @@
+[
+  {
+    "event_name": "cow_fed",
+    "event_version": 1,
+    "event_type": "domain",
+    "domain": "farm",
+    "required_inputs": ["cow"],
+    "optional_inputs": [],
+    "payload_fields": [{ "name": "cow", "required": true, "from": "cow" }]
+  },
+  {
+    "event_name": "hay_baled",
+    "event_version": 1,
+    "event_type": "domain",
+    "domain": "farm",
+    "required_inputs": ["bale"],
+    "optional_inputs": [],
+    "payload_fields": [{ "name": "bale", "required": true, "from": "bale" }]
+  }
+]
