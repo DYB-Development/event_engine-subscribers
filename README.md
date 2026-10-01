@@ -92,9 +92,17 @@ EventEngine::UnregisteredProcessorError: the rule for event :lead_created
   under that name
 ```
 
-If subscribers do not run for an event that *is* routed here, check that the
-subscriber class is in `app/subscribers`. A subscriber anywhere else registers only
-once Rails has loaded its class.
+If an event is routed to `inline` or `background` and no subscriber is registered for
+it, the app refuses to start and names each such event:
+
+```
+EventEngine::Subscribers::UnsubscribedEventsError: These events are routed to
+  subscribers but have none: hay_baled
+```
+
+The check runs once the app has started, after every class in `app/subscribers` is
+registered. A subscriber anywhere else registers only once Rails has loaded its class,
+so keep subscribers in `app/subscribers`.
 
 ## A working example app
 
