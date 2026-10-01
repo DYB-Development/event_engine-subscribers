@@ -28,7 +28,7 @@ module EventEngine
       # @param routes [Hash{Symbol=>Symbol}] each event name and the process type it is routed to
       # @return [Array<Symbol>]
       def self.unsubscribed(routes)
-        routes.keys
+        routes.keys.select { |event_name| subscribers_for(event_name).empty? }
       end
 
       # Removes all registrations. Intended for test isolation.
