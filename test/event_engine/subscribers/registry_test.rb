@@ -5,6 +5,10 @@ module EventEngine
     class RegistryTest < ActiveSupport::TestCase
       class FakeSubscriber; end
 
+      setup do
+        Registry.clear!
+      end
+
       teardown do
         Registry.clear!
       end
