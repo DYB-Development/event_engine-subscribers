@@ -14,6 +14,10 @@ module EventEngine
         end
       end
 
+      initializer "event_engine.subscribers.check_every_routed_event_has_a_subscriber" do
+        config.after_initialize { Subscribers.check!(Subscribers.routes) }
+      end
+
       initializer "event_engine.subscribers.forget_unloaded_subscribers" do |app|
         app.reloader.before_class_unload { Registry.clear! }
       end
