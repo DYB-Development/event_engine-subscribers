@@ -23,6 +23,14 @@ module EventEngine
         registrations[event_name&.to_sym] || []
       end
 
+      # Names the events routed to subscribers that have none registered.
+      #
+      # @param routes [Hash{Symbol=>Symbol}] each event name and the process type it is routed to
+      # @return [Array<Symbol>]
+      def self.unsubscribed(routes)
+        routes.keys
+      end
+
       # Removes all registrations. Intended for test isolation.
       #
       # @return [void]

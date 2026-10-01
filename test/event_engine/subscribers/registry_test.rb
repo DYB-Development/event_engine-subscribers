@@ -22,6 +22,10 @@ module EventEngine
       test "returns an empty array for a nil event name" do
         assert_equal [], Registry.subscribers_for(nil)
       end
+
+      test "names an event routed to subscribers that has none" do
+        assert_equal [ :cow_fed ], Registry.unsubscribed(cow_fed: :inline)
+      end
     end
   end
 end
