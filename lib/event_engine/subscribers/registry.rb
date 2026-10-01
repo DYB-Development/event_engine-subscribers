@@ -24,8 +24,11 @@ module EventEngine
       end
 
       def self.unsubscribed(routes)
-        routes.select { |event_name, process_type| Processor::HANDLED_PROCESS_TYPES.include?(process_type&.to_sym) && subscribers_for(event_name).empty? }.keys
+        routes.select { |event_name, process_type| routed_to_subscribers?(process_type) && subscribers_for(event_name).empty? }.keys
       end
+
+      def self.routed_to_subscribers?(process_type) = Processor::HANDLED_PROCESS_TYPES.include?(process_type&.to_sym)
+      private_class_method :routed_to_subscribers?
 
       # Removes all registrations. Intended for test isolation.
       #
