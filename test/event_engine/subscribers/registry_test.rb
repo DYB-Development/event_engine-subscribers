@@ -36,6 +36,10 @@ module EventEngine
 
         assert_empty Registry.unsubscribed(cow_fed: :inline)
       end
+
+      test "leaves out an event routed somewhere other than subscribers" do
+        assert_empty Registry.unsubscribed(cow_fed: :audit_log)
+      end
     end
   end
 end
