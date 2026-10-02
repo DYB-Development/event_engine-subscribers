@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-10-02
+
+### Added
+
+- `config.event_engine_subscribers.inline_packs`, the event packs whose events must run
+  inline. When it names any, the gem runs the inline check at start-up, refusing events
+  in those packs routed to `background`. It names none by default.
+
+### Changed
+
+- `check_inline!` takes `packs:`, and refuses only background events in those packs. A
+  host no longer calls it from its own start-up code.
+
 ## [0.3.0] - 2026-10-02
 
 ### Added

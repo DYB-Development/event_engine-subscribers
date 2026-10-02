@@ -5,6 +5,9 @@ module EventEngine
     class Engine < ::Rails::Engine
       isolate_namespace EventEngine::Subscribers
 
+      config.event_engine_subscribers = ActiveSupport::OrderedOptions.new
+      config.event_engine_subscribers.inline_packs = []
+
       initializer "event_engine.subscribers.register_processor" do
         config.after_initialize do
           processor = Processor.new
@@ -16,6 +19,13 @@ module EventEngine
 
       initializer "event_engine.subscribers.check_every_routed_event_has_a_subscriber" do
         config.after_initialize { Subscribers.check!(Subscribers.routes) }
+      end
+
+      initializer "event_engine.subscribers.check_inline_packs", after: "event_engine.subscribers.register_processor" do |app|
+        config.after_initialize do
+          packs = app.config.event_engine_subscribers.inline_packs
+          Subscribers.check_inline!(Subscribers.routes, packs: packs) if packs.any?
+        end
       end
 
       initializer "event_engine.subscribers.forget_unloaded_subscribers" do |app|

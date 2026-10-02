@@ -25,12 +25,16 @@ module EventEngine
       true
     end
 
-    def self.check_inline!(routes)
+    def self.check_inline!(routes, packs: nil)
       EventEngine.validate_rules!
       background = routes.reject { |_event_name, process_type| process_type == :inline }.keys
+      background = background.select { |event_name| packs.include?(pack_of(event_name)) } if packs
       raise BackgroundEventsError, background if background.any?
 
       true
     end
+
+    def self.pack_of(event_name) = EventEngine.schema_registry.latest_for(event_name).domain
+    private_class_method :pack_of
   end
 end
