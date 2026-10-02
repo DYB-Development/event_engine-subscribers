@@ -23,5 +23,11 @@ module EventEngine
 
       true
     end
+
+    def self.check_inline!(routes)
+      EventEngine.validate_rules!
+
+      true
+    end
   end
 end
