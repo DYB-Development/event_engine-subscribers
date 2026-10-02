@@ -4,6 +4,7 @@ require "event_engine/subscribers/registry"
 require "event_engine/subscribers/base"
 require "event_engine/subscribers/processor"
 require "event_engine/subscribers/unsubscribed_events_error"
+require "event_engine/subscribers/background_events_error"
 
 module EventEngine
   module Subscribers
@@ -26,6 +27,8 @@ module EventEngine
 
     def self.check_inline!(routes)
       EventEngine.validate_rules!
+      background = routes.reject { |_event_name, process_type| process_type == :inline }.keys
+      raise BackgroundEventsError, background if background.any?
 
       true
     end

@@ -15,6 +15,12 @@ module EventEngine
         end
       end
 
+      test "refuses to go on while events are routed to the background, and names every one" do
+        with_event_engine(ProcessingRules.new(default: :background)) do
+          assert_raises(BackgroundEventsError, match: "cow_fed, hay_baled") { Subscribers.check_inline!(Subscribers.routes) }
+        end
+      end
+
       private
 
       def with_event_engine(rules)
