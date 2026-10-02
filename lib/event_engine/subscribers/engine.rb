@@ -5,6 +5,9 @@ module EventEngine
     class Engine < ::Rails::Engine
       isolate_namespace EventEngine::Subscribers
 
+      config.event_engine_subscribers = ActiveSupport::OrderedOptions.new
+      config.event_engine_subscribers.inline_packs = []
+
       initializer "event_engine.subscribers.register_processor" do
         config.after_initialize do
           processor = Processor.new

@@ -15,4 +15,8 @@ class EventEngine::Subscribers::EngineTest < ActiveSupport::TestCase
 
     assert $?.success?, "Loading the gem without Rails failed:\n#{output}"
   end
+
+  test "a host names no packs that must run inline unless it sets them" do
+    assert_equal [], Rails.application.config.event_engine_subscribers.inline_packs
+  end
 end
