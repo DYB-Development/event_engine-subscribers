@@ -104,6 +104,24 @@ The check runs once the app has started, after every class in `app/subscribers` 
 registered. A subscriber anywhere else registers only once Rails has loaded its class,
 so keep subscribers in `app/subscribers`.
 
+## Requiring every event to run inline
+
+A subscriber that refuses a change can only undo it when it runs inline, during the
+emit. A host that depends on that calls the event start check once the subscriber
+processors are registered:
+
+```ruby
+# config/application.rb
+config.after_initialize do
+  EventEngine::Subscribers.check_inline!(EventEngine::Subscribers.routes)
+end
+```
+
+The app then refuses to start when an event has no rule, when a rule names a processor
+nothing registered, or when any event is routed to `background`. The last error names
+every such event. A host that does not call it can route events to `background` as
+before.
+
 ## A working example app
 
 [**DYB-Development/event_engine_example**](https://github.com/DYB-Development/event_engine_example)
