@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-10-02
+
+### Added
+
+- `EventEngine::Subscribers.check_inline!(routes)`, which a host calls once the subscriber
+  processors are registered. It runs event_engine's rules check, then raises
+  `BackgroundEventsError` naming every event routed to `background`.
+
 ## [0.2.0] - 2026-10-01
 
 ### Added
