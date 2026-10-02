@@ -9,6 +9,12 @@ module EventEngine
         end
       end
 
+      test "refuses to go on while a rule names a processor nothing registered, and names it" do
+        with_event_engine(ProcessingRules.new(default: :carrier_pigeon)) do
+          assert_raises(EventEngine::InvalidRulesError, match: "carrier_pigeon") { Subscribers.check_inline!(Subscribers.routes) }
+        end
+      end
+
       private
 
       def with_event_engine(rules)
