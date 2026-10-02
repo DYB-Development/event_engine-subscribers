@@ -18,6 +18,8 @@ module Dummy
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
 
+    config.event_engine_subscribers.inline_packs = ENV.fetch("INLINE_PACKS", "").split(",").map(&:to_sym)
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

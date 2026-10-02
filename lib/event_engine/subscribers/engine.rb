@@ -21,6 +21,13 @@ module EventEngine
         config.after_initialize { Subscribers.check!(Subscribers.routes) }
       end
 
+      initializer "event_engine.subscribers.check_inline_packs", after: "event_engine.subscribers.register_processor" do |app|
+        config.after_initialize do
+          packs = app.config.event_engine_subscribers.inline_packs
+          Subscribers.check_inline!(Subscribers.routes, packs: packs) if packs.any?
+        end
+      end
+
       initializer "event_engine.subscribers.forget_unloaded_subscribers" do |app|
         app.reloader.before_class_unload { Registry.clear! }
       end
