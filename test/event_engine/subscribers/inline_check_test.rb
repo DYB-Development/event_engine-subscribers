@@ -21,12 +21,18 @@ module EventEngine
         end
       end
 
+      test "refuses only background events in the packs named as inline" do
+        with_event_engine(ProcessingRules.new(default: :background)) do
+          assert_raises(BackgroundEventsError, match: /change: cow_fed\z/) { Subscribers.check_inline!(Subscribers.routes, packs: [ :farm ]) }
+        end
+      end
+
       private
 
       def with_event_engine(rules)
         schemas = Object.new
         def schemas.events = [ :cow_fed, :hay_baled ]
-        def schemas.latest_for(_event_name, domain: nil) = Struct.new(:domain).new(:farm)
+        def schemas.latest_for(event_name, domain: nil) = Struct.new(:domain).new(event_name == :hay_baled ? :barn : :farm)
 
         kept = [ EventEngine.schema_registry, EventEngine.processing_rules ]
         EventEngine.schema_registry, EventEngine.processing_rules = schemas, rules
