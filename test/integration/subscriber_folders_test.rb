@@ -19,10 +19,16 @@ class SubscriberFoldersTest < ActiveSupport::TestCase
     assert_equal "1", count
   end
 
+  test "a named folder or pattern that matches no folder does not stop the app from starting" do
+    started = in_development("print :started", folders: "missing/subscribers,nowhere/*/subscribers")
+
+    assert_equal "started", started
+  end
+
   private
 
-  def in_development(script)
-    output, status = Open3.capture2({ "RAILS_ENV" => "development", "SUBSCRIBER_FOLDERS" => "hubs/*/app/subscribers" }, "bin/rails", "runner", script, chdir: File.expand_path("../dummy", __dir__))
+  def in_development(script, folders: "hubs/*/app/subscribers")
+    output, status = Open3.capture2({ "RAILS_ENV" => "development", "SUBSCRIBER_FOLDERS" => folders }, "bin/rails", "runner", script, chdir: File.expand_path("../dummy", __dir__))
     assert status.success?, output
     output.lines.last
   end
