@@ -19,6 +19,7 @@ module Dummy
     config.autoload_lib(ignore: %w[assets tasks])
 
     config.event_engine_subscribers.inline_packs = ENV.fetch("INLINE_PACKS", "").split(",").map(&:to_sym)
+    config.event_engine_subscribers.subscriber_folders = ENV.fetch("SUBSCRIBER_FOLDERS", "").split(",")
 
     # Configuration for the application, engines, and railties goes here.
     #
