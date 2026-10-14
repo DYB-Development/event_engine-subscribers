@@ -10,6 +10,15 @@ class SubscriberFoldersTest < ActiveSupport::TestCase
     assert_equal "1", count
   end
 
+  test "a subscriber in a folder the host names is registered once again after a reload" do
+    count = in_development(<<~RUBY)
+      Rails.application.reloader.reload!
+      print EventEngine::Subscribers::Registry.subscribers_for(:hay_baled).size
+    RUBY
+
+    assert_equal "1", count
+  end
+
   private
 
   def in_development(script)
