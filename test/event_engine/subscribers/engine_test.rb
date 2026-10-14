@@ -19,4 +19,8 @@ class EventEngine::Subscribers::EngineTest < ActiveSupport::TestCase
   test "a host names no packs that must run inline unless it sets them" do
     assert_equal [], Rails.application.config.event_engine_subscribers.inline_packs
   end
+
+  test "a host names no extra subscriber folders unless it sets them" do
+    assert_equal [], Rails.application.config.event_engine_subscribers.subscriber_folders
+  end
 end

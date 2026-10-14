@@ -7,6 +7,7 @@ module EventEngine
 
       config.event_engine_subscribers = ActiveSupport::OrderedOptions.new
       config.event_engine_subscribers.inline_packs = []
+      config.event_engine_subscribers.subscriber_folders = []
 
       initializer "event_engine.subscribers.register_processor" do
         config.after_initialize do
