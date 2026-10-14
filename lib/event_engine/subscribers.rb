@@ -34,6 +34,10 @@ module EventEngine
       true
     end
 
+    def self.folders_matching(root, patterns)
+      patterns.flat_map { |pattern| Dir[root.join(pattern).to_s] }.map { |folder| Pathname.new(folder) }.select(&:directory?)
+    end
+
     def self.pack_of(event_name) = EventEngine.schema_registry.latest_for(event_name).domain
     private_class_method :pack_of
   end

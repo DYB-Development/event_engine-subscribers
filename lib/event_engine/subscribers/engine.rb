@@ -7,6 +7,12 @@ module EventEngine
 
       config.event_engine_subscribers = ActiveSupport::OrderedOptions.new
       config.event_engine_subscribers.inline_packs = []
+      config.event_engine_subscribers.subscriber_folders = []
+
+      initializer "event_engine.subscribers.autoload_subscriber_folders", before: :set_autoload_paths do |app|
+        folders = Subscribers.folders_matching(app.root, app.config.event_engine_subscribers.subscriber_folders)
+        app.config.eager_load_paths += folders.map(&:to_s)
+      end
 
       initializer "event_engine.subscribers.register_processor" do
         config.after_initialize do
@@ -36,6 +42,9 @@ module EventEngine
         config.to_prepare do
           subscribers = app.root.join("app/subscribers")
           Rails.autoloaders.main.eager_load_dir(subscribers) if subscribers.directory?
+          Subscribers.folders_matching(app.root, app.config.event_engine_subscribers.subscriber_folders).each do |folder|
+            Rails.autoloaders.main.eager_load_dir(folder)
+          end
         end
       end
     end

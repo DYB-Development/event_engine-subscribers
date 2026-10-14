@@ -100,9 +100,26 @@ EventEngine::Subscribers::UnsubscribedEventsError: These events are routed to
   subscribers but have none: hay_baled
 ```
 
-The check runs once the app has started, after every class in `app/subscribers` is
-registered. A subscriber anywhere else registers only once Rails has loaded its class,
-so keep subscribers in `app/subscribers`.
+The check runs once the app has started, after every class in `app/subscribers` and in
+the folders named in `subscriber_folders` is registered. A subscriber anywhere else
+registers only once Rails has loaded its class, so keep subscribers in `app/subscribers`
+or in a folder you name there.
+
+## Keeping subscribers in other folders
+
+A host that keeps subscribers outside `app/subscribers` names those folders, relative to
+the app's root:
+
+```ruby
+# config/application.rb
+config.event_engine_subscribers.subscriber_folders = ["hubs/*/app/subscribers"]
+```
+
+Each entry is a folder or a pattern that matches several folders. The gem adds every
+folder it matches to the app's eager load paths, then loads and registers its subscribers
+when the app starts and again after each code reload, the same as `app/subscribers`. A
+folder or pattern that matches nothing is skipped. It names no folders by default, so
+only `app/subscribers` is loaded.
 
 ## Requiring a pack's events to run inline
 
