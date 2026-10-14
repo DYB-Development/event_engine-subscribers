@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `config.event_engine_subscribers.subscriber_folders`, the folders or folder patterns,
+  relative to the app's root, whose subscribers are loaded and registered like those in
+  `app/subscribers`. The gem adds each matched folder to the eager load paths, and skips an
+  entry that matches no folder. It names none by default.
+
 ## [0.4.0] - 2026-10-02
 
 ### Added
