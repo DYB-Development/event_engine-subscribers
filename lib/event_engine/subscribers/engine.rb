@@ -27,10 +27,14 @@ module EventEngine
         config.after_initialize { Subscribers.check!(Subscribers.routes) }
       end
 
-      initializer "event_engine.subscribers.check_inline_packs", after: "event_engine.subscribers.register_processor" do |app|
-        config.after_initialize do
-          packs = app.config.event_engine_subscribers.inline_packs
-          Subscribers.check_inline!(Subscribers.routes, packs: packs) if packs.any?
+      initializer "event_engine.subscribers.check_inline_packs" do |app|
+        config.to_prepare do
+          next if app.initialized?
+
+          app.config.after_initialize do
+            packs = app.config.event_engine_subscribers.inline_packs
+            Subscribers.check_inline!(Subscribers.routes, packs: packs) if packs.any?
+          end
         end
       end
 
