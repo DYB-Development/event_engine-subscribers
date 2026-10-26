@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- The inline check at start-up now runs after every engine has registered its processors.
+  A host whose Gemfile lists this gem above a processor gem such as event_engine-delivery
+  no longer fails to boot with `InvalidRulesError` for a rule naming that gem's processor.
+
 ## [0.5.0] - 2026-10-14
 
 ### Added
