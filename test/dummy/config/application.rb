@@ -6,6 +6,14 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+module LateProcessors
+  class Engine < ::Rails::Engine
+    initializer "late_processors.register_durable" do
+      config.after_initialize { EventEngine.register_processor(:durable, ->(event) { event }) }
+    end
+  end
+end
+
 module Dummy
   class Application < Rails::Application
     config.load_defaults Rails::VERSION::STRING.to_f
